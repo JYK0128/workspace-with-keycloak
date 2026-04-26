@@ -1,7 +1,19 @@
-# Keycloak + React 관리자 페이지 (BFF 포함) 예제
+# Keycloak + React 관리자 페이지 (Monorepo + Turborepo, BFF 포함) 예제
 
-**Keycloak Docker + React(TypeScript) 관리자 UI + BFF(Backend for Frontend)** 구조입니다.
-React는 Keycloak Admin REST API를 직접 호출하지 않고, `bff/server.ts`를 통해 간접 호출합니다.
+**Keycloak Docker + React(TypeScript) 관리자 UI + BFF(Backend for Frontend)** 구조를 npm workspace + **Turborepo** 기반 **monorepo**로 구성했습니다.
+React는 Keycloak Admin REST API를 직접 호출하지 않고, `apps/bff/server.ts`를 통해 간접 호출합니다.
+
+## 디렉터리 구조
+
+```text
+.
+├─ apps/
+│  ├─ web/   # Vite + React
+│  └─ bff/   # Express + TypeScript
+├─ keycloak/
+├─ docker-compose.yml
+└─ package.json (workspace root)
+```
 
 ## 1) Keycloak 실행
 
@@ -16,31 +28,47 @@ docker compose up -d
 ## 2) 앱 환경 변수 준비
 
 ```bash
-cp .env.example .env
+cp apps/web/.env.example apps/web/.env
+cp apps/bff/.env.example apps/bff/.env
 ```
 
-## 3) 의존성 설치
+## 3) 의존성 설치 (workspace root)
 
 ```bash
 npm install
 ```
 
-## 4) BFF 실행
-
-```bash
-npm run bff
-```
-
-- BFF URL: http://localhost:4000
-- Health check: http://localhost:4000/health
-
-## 5) React 실행
+## 4) 전체 앱 동시 실행 (권장)
 
 ```bash
 npm run dev
 ```
 
+- Turborepo가 `apps/web`, `apps/bff`의 `dev` 스크립트를 병렬 실행합니다.
+
+## 5) BFF 단독 실행
+
+```bash
+npm run dev:bff
+```
+
+- BFF URL: http://localhost:4000
+- Health check: http://localhost:4000/health
+
+## 6) React 단독 실행
+
+```bash
+npm run dev:web
+```
+
 - React URL: http://localhost:5173
+
+## 기타 스크립트
+
+```bash
+npm run build
+npm run typecheck
+```
 
 ## 추가된 기능: 롤/권한 관리
 
