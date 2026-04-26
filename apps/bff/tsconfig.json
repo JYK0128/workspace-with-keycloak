@@ -7,7 +7,9 @@
     "strict": true,
     "skipLibCheck": true,
     "types": ["node"],
-    "noEmit": true
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["server.ts"]
+  "include": ["server.ts", "src/**/*.ts"]
 }
