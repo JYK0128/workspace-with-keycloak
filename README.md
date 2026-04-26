@@ -15,7 +15,7 @@ React는 Keycloak Admin REST API를 직접 호출하지 않고, `apps/bff/server
 └─ package.json (workspace root)
 ```
 
-## 1) Keycloak 실행
+## 1) Keycloak + PostgreSQL 실행
 
 ```bash
 docker compose up -d
@@ -23,6 +23,7 @@ docker compose up -d
 
 - URL: http://localhost:8080
 - Admin 계정: `admin / admin1234`
+- PostgreSQL: `localhost:5432` (`keycloak / keycloak1234`, DB: `keycloak`)
 - 기본 realm role 예시: `viewer`, `editor`, `auditor`
 
 ## 2) 앱 환경 변수 준비
